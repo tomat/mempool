@@ -118,3 +118,16 @@ export const currencies: Currency[] = [
   { locale: 'vi', code: 'VND', name: 'Đồng Việt Nam' },
   { locale: 'zh', code: 'CNY', name: '人民币' },
 ];
+
+export interface Country {
+  locale: string;
+  code: string;
+  name: string;
+}
+
+export const countries: Country[] = [
+  { locale: 'en', code: 'US', name: 'United States' },
+  { locale: 'fr', code: 'FR', name: 'France' },
+  { locale: 'sv', code: 'SE', name: 'Sverige' },
+  { locale: 'fi', code: 'FI', name: 'Suomi' },
+];

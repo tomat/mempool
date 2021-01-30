@@ -1,5 +1,5 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -50,6 +50,7 @@ import { TermsOfServiceComponent } from './components/terms-of-service/terms-of-
 import { StorageService } from './services/storage.service';
 import { HttpCacheInterceptor } from './services/http-cache.interceptor';
 import { CurrencyService } from './services/currency.service';
+import { CountryService } from "./services/country.service";
 
 @NgModule({
   declarations: [
@@ -104,8 +105,10 @@ import { CurrencyService } from './services/currency.service';
     SeoService,
     StorageService,
     CurrencyService,
-    { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true }
-  ],
+    CountryService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'fr' },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule {

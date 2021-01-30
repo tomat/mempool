@@ -65,7 +65,7 @@ function app() {
   }));
 
   // map / and /en to en-US
-  const defaultLocale = 'en-US';
+  const defaultLocale = 'fr';
   console.log(`serving default locale: ${defaultLocale}`);
   const appServerModule = require(`./dist/mempool/server/${defaultLocale}/main.js`);
   server.use('/', appServerModule.app(defaultLocale));

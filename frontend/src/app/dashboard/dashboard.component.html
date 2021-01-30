@@ -133,6 +133,12 @@
     </div>
   </button>
 
+  <div *ngIf="country$ | async" [formGroup]="countryForm" class="text-small text-center mt-4">
+    <select formControlName="country" class="custom-select custom-select-sm form-control-secondary form-control mx-auto" style="width: 170px;" (change)="changeCountry()">
+      <option *ngFor="let country of countries" [value]="country.code">{{ country.name }}</option>
+    </select>
+  </div>
+
   <div [formGroup]="languageForm" class="text-small text-center mt-4">
     <select formControlName="language" class="custom-select custom-select-sm form-control-secondary form-control mx-auto" style="width: 130px;" (change)="changeLanguage()">
       <option *ngFor="let lang of languages" [value]="lang.code">{{ lang.name }}</option>

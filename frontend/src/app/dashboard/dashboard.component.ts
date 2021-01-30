@@ -12,8 +12,9 @@ import { WebsocketService } from '../services/websocket.service';
 import { SeoService } from '../services/seo.service';
 import { StorageService } from '../services/storage.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { currencies, Currency, languages, Language } from '../app.constants';
+import { currencies, Currency, languages, Language, countries, Country } from '../app.constants';
 import { CurrencyService } from '../services/currency.service';
+import { CountryService } from '../services/country.service';
 
 interface MempoolBlocksData {
   blocks: number;
@@ -64,6 +65,9 @@ export class DashboardComponent implements OnInit {
   currencyForm: FormGroup;
   currencies: Currency[];
   currency$: Observable<Currency>;
+  countryForm: FormGroup;
+  countries: Country[];
+  country$: Observable<Country>;
 
   constructor(
     @Inject(LOCALE_ID) private locale: string,
@@ -73,6 +77,7 @@ export class DashboardComponent implements OnInit {
     private seoService: SeoService,
     private storageService: StorageService,
     private currencyService: CurrencyService,
+    private countryService: CountryService,
     private formBuilder: FormBuilder,
     @Inject(DOCUMENT) private document: Document
   ) { }
@@ -80,6 +85,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.languages = languages;
     this.currencies = currencies.sort((a, b) => a.name.localeCompare(b.name));
+    this.countries = countries.sort((a, b) => a.name.localeCompare(b.name));
     this.seoService.resetTitle();
     this.websocketService.want(['blocks', 'stats', 'mempool-blocks', 'live-2h-chart']);
     this.network$ = merge(of(''), this.stateService.networkChanged$);
@@ -98,6 +104,14 @@ export class DashboardComponent implements OnInit {
     this.currency$.pipe(take(1)).subscribe((d) => {
       this.currencyForm = this.formBuilder.group({
         currency: [d.code]
+      });
+    });
+
+    this.country$ = this.countryService.country$.asObservable();
+
+    this.country$.pipe(take(1)).subscribe((d) => {
+      this.countryForm = this.formBuilder.group({
+        country: [d.code]
       });
     });
 
@@ -277,7 +291,7 @@ export class DashboardComponent implements OnInit {
     if (this.languages.map((lang) => lang.code).indexOf(urlLanguage) > -1) {
       this.languageForm.get('language').setValue(urlLanguage);
     } else {
-      this.languageForm.get('language').setValue('en');
+      this.languageForm.get('language').setValue(this.locale);
     }
   }
 
@@ -293,5 +307,11 @@ export class DashboardComponent implements OnInit {
     const currency = this.currencyForm.get('currency').value;
 
     this.currencyService.setCurrency(currencies.filter(c => c.code === currency)[0]);
+  }
+
+  changeCountry() {
+    const country = this.countryForm.get('country').value;
+
+    this.countryService.setCountry(countries.filter(c => c.code === country)[0]);
   }
 }

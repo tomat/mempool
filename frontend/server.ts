@@ -127,7 +127,7 @@ function run(): void {
   const port = process.env.PORT || 4000;
 
   // Start up the Node server
-  const server = app('en-US');
+  const server = app('fr');
   server.listen(port, () => {
     console.log(`Node Express server listening on port ${port}`);
   });

@@ -1,19 +1,16 @@
 {
   "/api/v1": {
-    "target": "http://localhost:8999/",
+    "target": "https://mempool.space/",
     "secure": false
   },
   "/api/v1/ws": {
-    "target": "http://localhost:8999/",
+    "target": "https://mempool.space/",
     "secure": false,
     "ws": true
   },
   "/api/": {
-    "target": "http://localhost:8999/",
-    "secure": false,
-    "pathRewrite": {
-      "^/api/": "/api/v1/"
-    }
+    "target": "https://mempool.space/",
+    "secure": false
   },
   "/testnet/api/v1": {
     "target": "http://localhost:8999/",

@@ -221,6 +221,8 @@ export class WebsocketService {
     }
 
     if (response.conversions) {
+      // @todo
+      response.conversions.SEK = response.conversions.USD * 8.37;
       this.stateService.conversions$.next(response.conversions);
     }
 
